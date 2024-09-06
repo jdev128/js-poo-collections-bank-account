@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="shortcut icon"
+			href="./assets/icons8-banco-32.ico"
+			type="image/x-icon"
+		/>
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="./style.css" />
+		<script type="module" src="./script.js"></script>
+		<title>Home Banking</title>
+	</head>
+	<body>
+		<header>
+			<nav id="navigation-bar"></nav>
+		</header>
+		<main id="app-container">
+			<div id="saving-account" class="account-item">
+				<div class="account-type">
+					<p>ca</p>
+				</div>
+				<div class="account-detail">
+					<p>
+						<span class="emphasis">CBU</span>&nbsp;<span
+							class="cbu-number"
+						></span>
+					</p>
+					<p>
+						<span class="emphasis">SALDO</span>&nbsp;<span
+							class="current-balance"
+						></span>
+					</p>
+				</div>
+			</div>
+			<div id="basic-account" class="account-item">
+				<div class="account-type">
+					<p>cc</p>
+				</div>
+				<div class="account-detail">
+					<p>
+						<span class="emphasis">CBU</span>&nbsp;<span
+							class="cbu-number"
+						></span>
+					</p>
+					<p>
+						<span class="emphasis">SALDO</span>&nbsp;<span
+							class="current-balance"
+						></span
+						>&nbsp;<i class="info-icon bx bx-info-circle">
+							<span class="popover-container">
+								<span class="popover">
+									<span class="emphasis underline"
+										>Límite en descubierto</span
+									>:<br /><span
+										class="account-overdraft"
+									></span>
+								</span>
+							</span>
+						</i>
+					</p>
+				</div>
+			</div>
+			<div id="actions-list">
+				<button class="transaction-init" id="deposit-button">
+					Depositar
+				</button>
+				<button class="transaction-init" id="withdraw-button">
+					Extraer
+				</button>
+				<button class="transaction-init" id="transfer-button">
+					Transferir
+				</button>
+				<button id="cbu-book-button">Ver agenda</button>
+			</div>
+			<div id="history">
+				<table>
+					<colgroup>
+						<col id="transaction-ids" span="2" />
+						<col id="transaction-accounts" span="2" />
+						<col id="transaction-amounts" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Fecha/Hora</th>
+							<th>Tipo</th>
+							<th>Origen</th>
+							<th>Destino</th>
+							<th>Monto</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</main>
+		<div id="modal-backdrop" style="display: none">
+			<div id="transaction-creator" class="modal" style="display: none">
+				<div class="modal-header">
+					<p>Nueva transferencia</p>
+				</div>
+				<form id="transaction-data" action="#">
+					<div class="modal-content">
+						<label for="primary-account"></label>
+						<select name="primary-account" id="primary-account" required>
+							<option value="">Selecciona una opcion</option>
+						</select>
+						<label for="secondary-account">Cuenta de Destino</label>
+						<select name="secondary-account" id="secondary-account">
+							<option value="">Selecciona una opcion</option>
+						</select>
+						<label for="amount">Monto</label>
+						<input
+							type="number"
+							step="0.01"
+							min="1"
+							name="amount"
+							id="amount"
+							required
+						/>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="cancel-button">
+							Cancelar
+						</button>
+						<button type="submit" class="primary">
+						</button>
+					</div>
+				</form>
+			</div>
+			<div id="cbu-manager" class="modal" style="display: none">
+				<div class="modal-header">
+					<p>Agenda de CBU</p>
+				</div>
+				<form action="">
+					<div class="modal-content">
+						<div id="cbu-actions">
+							<input
+								id="cbu-input"
+								type="number"
+								placeholder="Ingresa un CBU o cadena a buscar"
+							/>
+							<button id="search-cbu" class="autoadjust">
+								<i class="bx bx-search-alt-2"></i>
+							</button>
+							<button id="add-cbu" class="autoadjust primary">
+								<i class="bx bx-plus"></i>
+							</button>
+						</div>
+						<div id="cbu-list">
+							<table class="">
+								<thead>
+									<tr>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="empty-agenda-message">
+										<td
+											colspan="2"
+											class="table-placeholder"
+										>
+											Aun no registraste ningún CBU
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="cancel-button">
+							Cerrar
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
