@@ -13,7 +13,7 @@ export default class Agenda {
 	}
 
 	has(cbu) {
-		return this.#cbus.has(cbu);
+		return this.#cbus.has(cbu.trim());
 	}
 
 	/**
@@ -23,18 +23,19 @@ export default class Agenda {
 	 * @throws A TypeError if cbu don't have a valid format.
 	 */
 	add(cbu) {
-		if (!Utils.cbuIsValid(cbu)) {
+		const TRIMMED_CBU = cbu.trim();
+		if (!Utils.cbuIsValid(TRIMMED_CBU)) {
 			throw new TypeError("Invalid CBU");
 		}
-		if (this.has(cbu)) {
+		if (this.has(TRIMMED_CBU)) {
 			return false;
 		}
-		this.#cbus.add(cbu);
+		this.#cbus.add(TRIMMED_CBU);
 		return true;
 	}
 
 	remove(cbu) {
-		return this.#cbus.delete(cbu);
+		return this.#cbus.delete(cbu.trim());
 	}
 
 	/**

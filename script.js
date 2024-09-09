@@ -16,6 +16,12 @@ import Utils from "./utils.js";
 		(monto, fecha, hora, cbuOrigen, cbuDestino)
 */
 
+/* FIXED BUGS
+	- Safari iOS: Don't hide secondary account on change (OK - disabled attribute)
+	- iOS & Android: Don't show title attributes (OK - ::before property)
+	- Firefox Android: Don't show validation messages (OK - form.invalid :invalid)
+*/
+
 const EXTRACTION_TAG = "Extracción";
 const DEPOSIT_TAG = "Depósito";
 const TRANSFER_TAG = "Transferencia";

@@ -114,19 +114,27 @@ function updateBasicAccountInfo(
 	}
 }
 
-/* TODO: HIDE SECONDARY OPTIONS */
+function resetSecondaryAccountSelector() {
+	SECONDARY_ACCOUNT.querySelector("option[hidden]")?.toggleAttribute(
+		"hidden"
+	);
+	SECONDARY_ACCOUNT.querySelector("option[disabled]")?.toggleAttribute(
+		"disabled"
+	);
+}
 
 function primaryAccountSelectionHandler(event) {
 	const NEW_VALUE = event.target.value;
 
-	SECONDARY_ACCOUNT.querySelector("option[hidden]")?.toggleAttribute(
-		"hidden"
-	);
+	resetSecondaryAccountSelector();
 
 	if (NEW_VALUE !== "") {
 		SECONDARY_ACCOUNT.querySelector(
 			`option[value='${NEW_VALUE}']`
 		)?.toggleAttribute("hidden");
+		SECONDARY_ACCOUNT.querySelector(
+			`option[value='${NEW_VALUE}']`
+		)?.toggleAttribute("disabled");
 
 		if (SECONDARY_ACCOUNT.value === NEW_VALUE) {
 			SECONDARY_ACCOUNT.value = "";
@@ -253,6 +261,9 @@ function showCBUList() {
  * @param {Event} event Button event dispatched by user
  */
 function closeModal(event) {
+	resetSecondaryAccountSelector();
+	event.target.closest("form").classList.remove("invalid");
+
 	const MODAL = event.target.closest(".modal");
 	MODAL.querySelector(".modal-content").scroll({
 		top: 0,
@@ -405,8 +416,8 @@ function addToHistory(date, type, origin, destination, amount) {
 	const NEW_TRANSACTION = document.createElement("tr");
 	NEW_TRANSACTION.innerHTML = `<td>${FORMATTED_DATE}</td>
 	<td>${type}</td>
-	<td title='${origin}'>${origin}</td>
-	<td title='${destination}'>${destination}</td>
+	<td title='${origin}' data-content='${origin}'>${origin}</td>
+	<td title='${destination}' data-content='${destination}'>${destination}</td>
 	<td>${Utils.financialFormat(amount)}</td>`;
 	HISTORY.insertBefore(NEW_TRANSACTION, HISTORY.firstChild);
 }
@@ -415,7 +426,17 @@ function showDialog(message) {
 	alert(message);
 }
 
-function preventDefault(event) {
+function checkForm(event) {
+	let form = event.target.closest("form");
+	let validForm = form.checkValidity();
+	if (!validForm) {
+		form.classList.add("invalid");
+	} else {
+		form.classList.remove("invalid");
+	}
+}
+
+function submitHandler(event) {
 	event.preventDefault();
 }
 
@@ -452,7 +473,11 @@ function initHandlers(
 	/* Handler to prevent page refreshing on forms submit */
 	document
 		.querySelectorAll("form")
-		.forEach((form) => form.addEventListener("submit", preventDefault));
+		.forEach((form) => form.addEventListener("submit", submitHandler));
+
+	document
+		.querySelectorAll("button[type=submit]")
+		.forEach((subButton) => subButton.addEventListener("click", checkForm));
 
 	/* Handler to SHOW MODAL dialogs to create transactions */
 	document

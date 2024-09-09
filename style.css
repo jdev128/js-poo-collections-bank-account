@@ -128,6 +128,10 @@ label {
 	width: 100%;
 }
 
+form.invalid :invalid {
+	border-color: red;
+}
+
 /* Tablas */
 
 table {
@@ -138,6 +142,7 @@ table {
 thead {
 	background-color: var(--primary-color);
 	color: var(--light-color);
+	z-index: 10;
 }
 
 #history table th:nth-child(3),
@@ -445,5 +450,24 @@ td {
 	}
 	.modal-footer {
 		padding: 20px;
+	}
+}
+
+@media (hover: none) {
+	tr, table {
+		position: relative;
+	}
+	
+	td[data-content]:hover::before {
+		display: block;
+		padding: 3px 5px;
+		border-radius: 3px;
+		z-index: 20;
+		border: 1px solid var(--dark-color);
+		position: absolute;
+		top: 1.5lh;
+		content: attr(data-content);
+		color: var(--dark-color);
+		background-color: var(--light-color);
 	}
 }
